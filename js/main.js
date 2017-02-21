@@ -1,93 +1,189 @@
-//funcion que cree nodos 
-function crearNodo( contenedor , mensaje)
-{
-  var nodo = document.createElement("span");
-  nodo.innerText = mensaje;
-  contenedor.appendChild(nodo);
-}
-
-function validateForm()
-{
-     
-  validaName();
-  validaLastname();
-  validaEmail();
-  validaPass();
-  validaBici();
-
-}
-function primMayuscula(id)
-{
-    var nombreArray = id.split("");
-    var primeraLetra = nombreArray[0];
-    var primeraMayus = primeraLetra.toUpperCase();
-    var cortePalabra = false;
-     for(var i=1;i<nombreArray.length;i++)
-        {
-          if(cortePalabra)
-          {    
-            primeraMayus += nombreArray[i].toUpperCase();
-            cortePalabra = false;
-          }
-          else
-              primeraMayus+=nombreArray[i];
-          if(nombreArray[i] == " ")
-              cortePalabra = true;
-        }
-    return primeraMayus;
-} 
-
-//convierte la primera letra en mayuscula
-function validaName() 
-{
-  var name = document.getElementById("name").value; 
-  if(name.length==0)
-    {  
-       crearNodo( contenedorName ,"Debes Ingresar Nombre");
+function validateForm(){
+    var mensajito = document.getElementById("mensaje");
+    var name = document.getElementById("name");
+    var lastname = document.getElementById("lastname");
+    var email = document.getElementById("input-email");
+    var password = document.getElementById("input-password");
+    var tipo = document.getElementById("select");
+    
+    
+    if(name.value.length==0 || lastname.value.length==0 || email.value.length==0 || password.value.length==0 || tipo.value==0) {
+        
+        validateName();
+        validateLastname();
+        validateEmail();
+        validatePassword();
+        validateType();
+        mensajito.innerHTML = "";
+        
+    } else {
+        
+        if(name.value.length>0 && lastname.value.length>0 && email.value.length>0 && password.value.length>0 && tipo.value!=0){
+            
+            mensajito.innerHTML = "<br><h3 style='color:green'>¡Formulario completado!</h3>";    
+            
+        } else {
+            
+            mensajito.innerHTML = "";
+        }  
     } 
-  if(name.length!= 0){
-      var letra=primMayuscula(name);
-      document.getElementById("name").value = letra; 
-      /*name.parentNode.removeChild(name.nextSibling);*/
-      crearNodo( contenedorName ,"Nombre ingresado");
-   
-   } 
 }
-//valida el apellido segun el formato valido
-function validaLastname() 
-{
-  var lastname = document.getElementById("lastname").value;    
-  if(lastname==0){
-      crearNodo(contenedorLastname,"Debes Ingresar Apellido");}
-  if(lastname.length!= 0)
-  {
-    var letra=primMayuscula(lastname);
-    crearNodo(contenedorLastname,"Apellido Valido");
-    document.getElementById("lastname").value = letra; 
-  }
+
+function validateName(_evt){
+    
+    //Input
+    var nombre = document.getElementById("name");
+    //Creando el texto de la Caja Negra
+    var textoNombre = "Debe ingresar su nombre";
+    var textoNumero = "Los números no son válidos";
+ 
+    
+    if(nombre.value!=""){
+       
+        nombre.value = convertirMayus(nombre.value);
+        
+        if(/([0-9])/g.test(nombre.value)){
+            mensaje("name",textoNumero);
+        } else {
+            eliminar("name");
+        }
+    } else {
+        mensaje("name",textoNombre);
+    }    
 }
-//valida el email segun el formato valido
-function validaEmail() 
-{ 
-  var email = document.getElementById("input-email").value;
-  if (!email.match(/^[A-Za-z\._\-0-9]*[@][A-Za-z]*[\.][a-z]{2,4}$/)){ crearNodo(contenedorEmail,"Formato Invalido, Ej: name@domain.com"); return false; }
-  else{ crearNodo(contenedorEmail,"Email valido ?"); return true; }
+
+function validateLastname(_evt) {
+    
+    //Input
+    var apellido = document.getElementById("lastname");
+    //Creando el texto de la Caja Negra
+    var textoApellido = "Debe ingresar su apellido";
+    var textoNumero = "Los números no son válidos";
+    
+ 
+    if(apellido.value!=""){
+        
+        apellido.value = convertirMayus(apellido.value);
+        
+        if(/([0-9])/g.test(apellido.value)){
+            mensaje("lastname",textoNumero)  
+        } else {
+            eliminar("lastname");
+        } 
+    } else {
+        mensaje("lastname",textoApellido);    
+    }
 }
-//valida la contraseña, el minimo 6 caracteres
-function validaPass()
-{
-  var password = document.getElementById("input-password").value;
-  if (!password.match(/.{6,}/)){ crearNodo(contenedorPassword,"Minimo 6 caracteres"); return false;}
-  else if ( password == "123456" || password.toLowerCase() == "password" || password == "098754") 
-  {
-    crearNodo(contenedorPassword,"Contraseña Invalida");
-    return false;
-  }
-  else{ crearNodo(contenedorPassword,"Contraseña valida "); return true; }
+
+function validateEmail(_evt){
+    
+    //Input
+    var emailX = document.getElementById("input-email");
+    //Creando el texto de la Caja Negra
+    var textoEmail = "Verifique su e-mail";
+
+    if(/([a-zA-Z0-9(-_.)]+[@][a-zA-Z0-9]+[.][a-zA-Z]+)/g.test(emailX.value)){
+        eliminar("input-email"); 
+    } else {
+        if(emailX.value.length >= 0){
+            mensaje("input-email",textoEmail);  
+        }
+    }
 }
-function validaBici()
-{
-  var tipoBici = document.getElementById("select_bici").value;
-  if (tipoBici != 0){ crearNodo(contenedorBici,"Bici Seleccionada  "); return true; }
-  else{ crearNodo(contenedorBici,"Selecciona una Bici"); return false; }
+
+function validatePassword(_evt) {
+    
+    //Input
+    var password = document.getElementById("input-password");
+    //Creando el texto de la Caja Negra
+    var textoPassword = "La contraseña debe tener al menos 6 caracteres";
+    
+    if(password.value === "098754" || password.value.length <= 6 || password.value === "123456" || password.value.toLowerCase() === "password" ) {
+        mensaje("input-password",textoPassword); 
+        
+    } else {
+        eliminar("input-password");
+    }
 }
+
+function validateType(_evt) {
+    
+    //Input
+    var tipo = document.getElementById("select");
+    //Creando el texto de la Caja Negra
+    var textoTipo = "Debes seleccionar al menos un tipo de bici";
+    
+    if(tipo.value == 0){
+          mensaje("select",textoTipo);
+    } else { 
+        if(tipo.value == "urbana" || tipo.value == "treking" || tipo.value == "electrica" || tipo.value == "estatica"){
+           eliminar("select");
+        }
+          
+    }   
+}
+
+function mensaje(campo,texto){
+
+    var elemento = document.getElementById(campo);
+    
+    //El span no existe
+    if(elemento.nextSibling == null) {
+        crearSpan(elemento,texto);
+    //El span si existe    
+    } else { 
+        
+        if(elemento.nextSibling.tagName == 'SPAN'){
+            elemento.nextSibling.innerHTML = texto;
+            
+        } else {
+            elemento.parentNode.removeChild(elemento.nextSibling); 
+            crearSpan(elemento,texto);
+        }        
+    }
+}
+
+function eliminar(campo){
+    
+    var elemento = document.getElementById(campo);
+    
+    if(elemento.nextSibling != null) {
+        
+        elemento.parentNode.removeChild(elemento.nextSibling);
+    }
+    
+}
+
+function convertirMayus(texto){
+    
+    //MAYUSCULA
+    var nombreArray = texto.split("");
+    var primeraLetra = nombreArray[0];
+    var mayuscula = primeraLetra.toUpperCase();
+    var espacio = false;
+
+    for(var i=1; i<nombreArray.length; i++) {
+
+        if(espacio){
+            mayuscula += nombreArray[i].toUpperCase();
+            espacio = false;
+        } else {
+            mayuscula += nombreArray[i];
+            if(nombreArray[i] == " ")
+                espacio = true;
+        }
+    }
+    
+    return mayuscula;
+}
+
+function crearSpan(elementoInput,textoInput){
+    
+    //Creando la Caja Negra
+    var cajaNegra = document.createElement("span");
+    var info = document.createTextNode(textoInput);
+    cajaNegra.appendChild(info);
+    var padre = elementoInput.parentNode;
+    padre.appendChild(cajaNegra);
+}
+
