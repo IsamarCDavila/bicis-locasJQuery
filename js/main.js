@@ -1,13 +1,23 @@
 function validateForm(){
-    var mensajito = document.getElementById("mensaje");
-    var name = document.getElementById("name");
-    var lastname = document.getElementById("lastname");
-    var email = document.getElementById("input-email");
-    var password = document.getElementById("input-password");
-    var tipo = document.getElementById("select");
+    var mensajito=$("#mensaje").val();
+    console.log(mensajito);
+    //var mensajito = document.getElementById("mensaje");
+    var name=$("#name").val();
+    console.log(name);
+    //var name = document.getElementById("name");
+    var lastname=$("#lastname").val();
+    console.log(lastname);
+    //var lastname = document.getElementById("lastname");
+    //var email = document.getElementById("input-email");
+    var password=$("#password").val();
+    console.log(password);
+    //var password = document.getElementById("input-password");
+    var tipo=$("#select").val();
+    console.log(name);
+    //var tipo = document.getElementById("select");
     
     
-    if(name.value.length==0 || lastname.value.length==0 || email.value.length==0 || password.value.length==0 || tipo.value==0) {
+    if(name.length==0 || lastname.length==0 || email.length==0 || password.length==0 || tipo==0) {
         
         validateName();
         validateLastname();
@@ -18,7 +28,7 @@ function validateForm(){
         
     } else {
         
-        if(name.value.length>0 && lastname.value.length>0 && email.value.length>0 && password.value.length>0 && tipo.value!=0){
+        if(name.length>0 && lastname.length>0 && email.length>0 && password.length>0 && tipo!=0){
             
             mensajito.innerHTML = "<br><h3 style='color:green'>¡Formulario completado!</h3>";    
             
@@ -32,17 +42,18 @@ function validateForm(){
 function validateName(_evt){
     
     //Input
-    var nombre = document.getElementById("name");
+    var nombre=$("#name");
+    //var nombre = document.getElementById("name");
     //Creando el texto de la Caja Negra
     var textoNombre = "Debe ingresar su nombre";
     var textoNumero = "Los números no son válidos";
  
     
-    if(nombre.value!=""){
+    if(nombre.val()!=""){
        
-        nombre.value = convertirMayus(nombre.value);
+        nombre.val() = convertirMayus(nombre.val());
         
-        if(/([0-9])/g.test(nombre.value)){
+        if(/([0-9])/g.test(nombre.val())){
             mensaje("name",textoNumero);
         } else {
             eliminar("name");
@@ -55,17 +66,18 @@ function validateName(_evt){
 function validateLastname(_evt) {
     
     //Input
-    var apellido = document.getElementById("lastname");
+     var apellido=$("#lastname");
+    //var apellido = document.getElementById("lastname");
     //Creando el texto de la Caja Negra
     var textoApellido = "Debe ingresar su apellido";
     var textoNumero = "Los números no son válidos";
     
  
-    if(apellido.value!=""){
+    if(apellido.val()!=""){
         
-        apellido.value = convertirMayus(apellido.value);
+        apellido.val() = convertirMayus(apellido.val());
         
-        if(/([0-9])/g.test(apellido.value)){
+        if(/([0-9])/g.test(apellido.val())){
             mensaje("lastname",textoNumero)  
         } else {
             eliminar("lastname");
@@ -78,14 +90,15 @@ function validateLastname(_evt) {
 function validateEmail(_evt){
     
     //Input
-    var emailX = document.getElementById("input-email");
+    var emailX=$('#input-email');
+    //var emailX = document.getElementById("input-email");
     //Creando el texto de la Caja Negra
     var textoEmail = "Verifique su e-mail";
 
-    if(/([a-zA-Z0-9(-_.)]+[@][a-zA-Z0-9]+[.][a-zA-Z]+)/g.test(emailX.value)){
+    if(/([a-zA-Z0-9(-_.)]+[@][a-zA-Z0-9]+[.][a-zA-Z]+)/g.test(emailX.val())){
         eliminar("input-email"); 
     } else {
-        if(emailX.value.length >= 0){
+        if(emailX.val().length >= 0){
             mensaje("input-email",textoEmail);  
         }
     }
@@ -94,7 +107,8 @@ function validateEmail(_evt){
 function validatePassword(_evt) {
     
     //Input
-    var password = document.getElementById("input-password");
+    var password=$('#input-password');
+    //var password = document.getElementById("input-password");
     //Creando el texto de la Caja Negra
     var textoPassword = "La contraseña debe tener al menos 6 caracteres";
     
@@ -109,14 +123,15 @@ function validatePassword(_evt) {
 function validateType(_evt) {
     
     //Input
-    var tipo = document.getElementById("select");
+    var tipo=$("#select");
+    //var tipo = document.getElementById("select");
     //Creando el texto de la Caja Negra
     var textoTipo = "Debes seleccionar al menos un tipo de bici";
     
-    if(tipo.value == 0){
+    if(tipo.val() == 0){
           mensaje("select",textoTipo);
     } else { 
-        if(tipo.value == "urbana" || tipo.value == "treking" || tipo.value == "electrica" || tipo.value == "estatica"){
+        if(tipo.val() == "urbana" || tipo.val() == "treking" || tipo.val() == "electrica" || tipo.val() == "estatica"){
            eliminar("select");
         }
           
@@ -125,7 +140,8 @@ function validateType(_evt) {
 
 function mensaje(campo,texto){
 
-    var elemento = document.getElementById(campo);
+    var elemento=$("#campo");
+    //var elemento = document.getElementById(campo);
     
     //El span no existe
     if(elemento.nextSibling == null) {
@@ -145,7 +161,8 @@ function mensaje(campo,texto){
 
 function eliminar(campo){
     
-    var elemento = document.getElementById(campo);
+    //var elemento = document.getElementById(campo);
+    var elemento=$("#campo");
     
     if(elemento.nextSibling != null) {
         
@@ -180,7 +197,9 @@ function convertirMayus(texto){
 function crearSpan(elementoInput,textoInput){
     
     //Creando la Caja Negra
-    var cajaNegra = document.createElement("span");
+    var cajaNegra=$("#span");
+    //var cajaNegra = document.createElement("span");
+    var info=$("#textInput");
     var info = document.createTextNode(textoInput);
     cajaNegra.appendChild(info);
     var padre = elementoInput.parentNode;
