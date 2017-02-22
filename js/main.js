@@ -10,7 +10,7 @@ function validateForm(){
     //var lastname = document.getElementById("lastname");
     var email=$("#input-email").val();
     //var email = document.getElementById("input-email");
-    var password=$("#password").val();
+    var password=$("#input-password").val();
     //console.log(password);
     //var password = document.getElementById("input-password");
     var tipo=$("#select").val();
@@ -30,6 +30,7 @@ function validateForm(){
     } else {
         
         if(name.length>0 && lastname.length>0 && email.length>0 && password.length>0 && tipo!=0){
+            console.log("formulario completo!");
             
             mensajito.innerHTML = "<br><h3 style='color:green'>¡Formulario completado!</h3>";    
             
@@ -97,7 +98,7 @@ function validateEmail(_evt){
     var textoEmail = "Verifique su e-mail";
 //console.log(/([a-zA-Z0-9(-_.)]+[@][a-zA-Z0-9]+[.][a-zA-Z]+)/g.test(emailX.val()));
     if(/([a-zA-Z0-9(-_.)]+[@][a-zA-Z0-9]+[.][a-zA-Z]+)/g.test(emailX.val())){
-        console.log("prueba");
+        //console.log("prueba");
         eliminar(emailX); 
     } else {
         if(emailX.val().length >= 0){
@@ -142,7 +143,7 @@ function validateType(_evt) {
 
 function mensaje(elemento,texto){
 
-    console.log(elemento);
+   // console.log(elemento);
     //var elemento = document.getElementById(campo);
     
     //El span no existe
