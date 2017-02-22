@@ -196,9 +196,11 @@ function crearSpan(elementoInput,textoInput){
     
     //Creando la Caja Negra
     var cajaNegra=$(document.createElement('span')).html(textoInput);
+    
     var padre = elementoInput.parent();
     padre.append(cajaNegra);
     //var cajaNegra = document.createElement("span");
+    
     //var info=$("#textInput");
     //var info = document.createTextNode(textoInput);
     //cajaNegra.append(info);
