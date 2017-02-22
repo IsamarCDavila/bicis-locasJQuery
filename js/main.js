@@ -81,10 +81,10 @@ function validateLastname(_evt) {
         if(/([0-9])/g.test(apellido.val())){
             mensaje("lastname",textoNumero)  
         } else {
-            eliminar("lastname");
+            eliminar(apellido);
         } 
     } else {
-        mensaje("lastname",textoApellido);    
+        mensaje(apellido,textoApellido);    
     }
 }
 
@@ -95,12 +95,13 @@ function validateEmail(_evt){
     //var emailX = document.getElementById("input-email");
     //Creando el texto de la Caja Negra
     var textoEmail = "Verifique su e-mail";
-
+//console.log(/([a-zA-Z0-9(-_.)]+[@][a-zA-Z0-9]+[.][a-zA-Z]+)/g.test(emailX.val()));
     if(/([a-zA-Z0-9(-_.)]+[@][a-zA-Z0-9]+[.][a-zA-Z]+)/g.test(emailX.val())){
-        eliminar("input-email"); 
+        console.log("prueba");
+        eliminar(emailX); 
     } else {
         if(emailX.val().length >= 0){
-            mensaje("input-email",textoEmail);  
+            mensaje(emailX,textoEmail);  
         }
     }
 }
@@ -114,10 +115,10 @@ function validatePassword(_evt) {
     var textoPassword = "La contraseña debe tener al menos 6 caracteres";
     
     if(password.val() === "098754" || password.val().length <= 6 || password.val() === "123456" || password.val().toLowerCase() === "password" ) {
-        mensaje("input-password",textoPassword); 
+        mensaje(password,textoPassword); 
         
     } else {
-        eliminar("input-password");
+        eliminar(password);
     }
 }
 
@@ -130,10 +131,10 @@ function validateType(_evt) {
     var textoTipo = "Debes seleccionar al menos un tipo de bici";
     
     if(tipo.val() == 0){
-          mensaje("select",textoTipo);
+          mensaje(tipo,textoTipo);
     } else { 
         if(tipo.val() == "urbana" || tipo.val() == "treking" || tipo.val() == "electrica" || tipo.val() == "estatica"){
-           eliminar("select");
+           eliminar(tipo);
         }
           
     }   
