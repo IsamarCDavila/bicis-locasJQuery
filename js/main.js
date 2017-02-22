@@ -1,19 +1,20 @@
 function validateForm(){
     var mensajito=$("#mensaje").val();
-    console.log(mensajito);
+    //console.log(mensajito);
     //var mensajito = document.getElementById("mensaje");
     var name=$("#name").val();
-    console.log(name);
+    //console.log(name);
     //var name = document.getElementById("name");
     var lastname=$("#lastname").val();
-    console.log(lastname);
+   // console.log(lastname);
     //var lastname = document.getElementById("lastname");
+    var email=$("#input-email").val();
     //var email = document.getElementById("input-email");
     var password=$("#password").val();
-    console.log(password);
+    //console.log(password);
     //var password = document.getElementById("input-password");
     var tipo=$("#select").val();
-    console.log(name);
+    //console.log(name);
     //var tipo = document.getElementById("select");
     
     
@@ -51,15 +52,15 @@ function validateName(_evt){
     
     if(nombre.val()!=""){
        
-        nombre.val() = convertirMayus(nombre.val());
+        nombre.val(convertirMayus(nombre.val()));
         
         if(/([0-9])/g.test(nombre.val())){
-            mensaje("name",textoNumero);
+            mensaje(nombre,textoNumero);
         } else {
-            eliminar("name");
+            eliminar(nombre);
         }
     } else {
-        mensaje("name",textoNombre);
+        mensaje(nombre,textoNombre);
     }    
 }
 
@@ -75,7 +76,7 @@ function validateLastname(_evt) {
  
     if(apellido.val()!=""){
         
-        apellido.val() = convertirMayus(apellido.val());
+        apellido.val(convertirMayus(apellido.val()));
         
         if(/([0-9])/g.test(apellido.val())){
             mensaje("lastname",textoNumero)  
@@ -112,7 +113,7 @@ function validatePassword(_evt) {
     //Creando el texto de la Caja Negra
     var textoPassword = "La contraseña debe tener al menos 6 caracteres";
     
-    if(password.value === "098754" || password.value.length <= 6 || password.value === "123456" || password.value.toLowerCase() === "password" ) {
+    if(password.val() === "098754" || password.val().length <= 6 || password.val() === "123456" || password.val().toLowerCase() === "password" ) {
         mensaje("input-password",textoPassword); 
         
     } else {
@@ -138,36 +139,31 @@ function validateType(_evt) {
     }   
 }
 
-function mensaje(campo,texto){
+function mensaje(elemento,texto){
 
-    var elemento=$("#campo");
+    console.log(elemento);
     //var elemento = document.getElementById(campo);
     
     //El span no existe
-    if(elemento.nextSibling == null) {
+    if(elemento.next() == null) {
         crearSpan(elemento,texto);
     //El span si existe    
     } else { 
         
-        if(elemento.nextSibling.tagName == 'SPAN'){
-            elemento.nextSibling.innerHTML = texto;
+        if(elemento.next().find() == 'SPAN'){
+            elemento.next.append(texto);
             
         } else {
-            elemento.parentNode.removeChild(elemento.nextSibling); 
+            elemento.next().remove();
             crearSpan(elemento,texto);
         }        
     }
 }
 
-function eliminar(campo){
-    
-    //var elemento = document.getElementById(campo);
-    var elemento=$("#campo");
-    
-    if(elemento.nextSibling != null) {
+function eliminar(elemento){
         
-        elemento.parentNode.removeChild(elemento.nextSibling);
-    }
+        elemento.next().remove();
+    
     
 }
 
@@ -194,15 +190,17 @@ function convertirMayus(texto){
     return mayuscula;
 }
 
-function crearSpan(elementoInput,textoInput){
+function crearSpan(elementoInput,textoInput){    
     
     //Creando la Caja Negra
-    var cajaNegra=$("#span");
+    var cajaNegra=$(document.createElement('span')).html(textoInput);
+    var padre = elementoInput.parent();
+    padre.append(cajaNegra);
     //var cajaNegra = document.createElement("span");
-    var info=$("#textInput");
-    var info = document.createTextNode(textoInput);
-    cajaNegra.appendChild(info);
-    var padre = elementoInput.parentNode;
-    padre.appendChild(cajaNegra);
+    //var info=$("#textInput");
+    //var info = document.createTextNode(textoInput);
+    //cajaNegra.append(info);
+    
+    //
 }
 
